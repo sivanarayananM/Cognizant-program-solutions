@@ -1,0 +1,53 @@
+public class FinancialForecast {
+
+    public static void main(String[] args) {
+        int[] revenues = {1000, 1200, 1300, 1250, 1500, 1600, 1580, 1650, 1700, 1750, 1800, 1900};
+        String[] months = {
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+        };
+
+        int total = 0;
+        int maxRevenue = revenues[0];
+        int minRevenue = revenues[0];
+        int maxIndex = 0;
+        int minIndex = 0;
+
+        for (int i = 0; i < revenues.length; i++) {
+            total += revenues[i];
+
+            if (revenues[i] > maxRevenue) {
+                maxRevenue = revenues[i];
+                maxIndex = i;
+            }
+
+            if (revenues[i] < minRevenue) {
+                minRevenue = revenues[i];
+                minIndex = i;
+            }
+        }
+
+        int average = total / revenues.length;
+        
+        int totalDifference = 0;
+        for (int i = 1; i < revenues.length; i++) {
+            totalDifference += (revenues[i] - revenues[i - 1]);
+        }
+        int avgChange = totalDifference / (revenues.length - 1);
+        int predictedNextMonth = revenues[revenues.length - 1] + avgChange;
+
+        System.out.println("Average Revenue: " + average);
+        System.out.println("Highest Revenue: " + maxRevenue + " (" + months[maxIndex] + ")");
+        System.out.println("Lowest Revenue: " + minRevenue + " (" + months[minIndex] + ")");
+        System.out.println("Predicted Next Month Revenue: " + predictedNextMonth);
+    }
+}
+
+/*
+output
+
+Average Revenue: 1519
+Highest Revenue: 1900 (December)
+Lowest Revenue: 1000 (January)
+Predicted Next Month Revenue: 1981
+ */
