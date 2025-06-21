@@ -1,0 +1,40 @@
+interface Vehicle {
+    void ride();
+}
+class Car implements Vehicle{
+    public void ride(){
+        System.out.println("Riding a car");
+    }
+}
+class Bike implements  Vehicle{
+    public void ride(){
+        System.out.println("Riding a bike");
+    }
+}
+class VehicleFactory{
+    public static Vehicle getVehicle(String type){
+     if(type.equalsIgnoreCase("car")){
+         return new Car();
+     } else if(type.equalsIgnoreCase("bike")){
+         return new Bike();
+     }
+     return null;
+    }
+}
+
+class Client{
+    public static void main(String[] args) {
+        Vehicle v1=VehicleFactory.getVehicle("car");
+        v1.ride();
+        v1=VehicleFactory.getVehicle("bike");
+        v1.ride();
+    }
+}
+
+/*
+output
+
+Riding a car
+Riding a bike
+
+ */
