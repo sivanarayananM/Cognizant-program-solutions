@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+class Product {
+    String name;
+    int price;
+
+    Product(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - ₹" + price;
+    }
+}
+
+public class SearchProducts {
+    public static void main(String[] args) {
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(new Product("Laptop", 60000));
+        productList.add(new Product("Smartphone", 20000));
+        productList.add(new Product("Smartwatch", 5000));
+        productList.add(new Product("Lamp", 800));
+        productList.add(new Product("Camera", 15000));
+
+        String keyword = "ca";
+
+        ArrayList<String> matchedProducts = new ArrayList<>();
+
+        for (Product p : productList) {
+            if (p.name.toLowerCase().contains(keyword.toLowerCase())) {
+                matchedProducts.add(p.name);
+            }
+        }
+
+        Collections.sort(matchedProducts);
+
+        System.out.println("Search Results for \"" + keyword + "\":");
+        for (String name : matchedProducts) {
+            System.out.println(name);
+        }
+    }
+}
+
+/*
+Output
+
+Search Results for "ca":
+Camera
+ */
