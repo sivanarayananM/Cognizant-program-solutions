@@ -1,1 +1,38 @@
+public class DatabaseConnection {
+    private static DatabaseConnection instance;
+    private DatabaseConnection(){}
+    public static DatabaseConnection getInstance(){
+        if(instance==null){
+            instance=new DatabaseConnection();
+        }
+        return  instance;
+    }
+    public void connect(){
+        System.out.println("Database connected");
+    }
+    public void disconnect(){
+        System.out.println("Database disconnected");
+    }
+}
+class Main1{
+    public static void main(String[] args) {
+        DatabaseConnection db1=DatabaseConnection.getInstance();
+        DatabaseConnection db2=DatabaseConnection.getInstance();
+        db1.connect();
+        db1.disconnect();
+        db2.connect();
+        db2.disconnect();
 
+        System.out.println(db1==db2);
+    }
+}
+
+/*
+Output
+
+Database connected
+Database disconnected
+Database connected
+Database disconnected
+true
+ */
