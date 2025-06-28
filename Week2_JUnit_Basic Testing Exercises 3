@@ -1,0 +1,47 @@
+public class Calculator {
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public boolean isEven(int n) {
+        return n % 2 == 0;
+    }
+}
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+
+    Calculator calc;
+
+    //Arrange
+    @BeforeEach
+    void setUp() {
+        calc = new Calculator();
+    }
+
+    @AfterEach
+    void tearDown() {
+        calc = null;
+    }
+
+    @Test
+    void testMultiply() {
+
+        // Act
+        int result = calc.multiply(3, 4);
+
+        // Assert
+        assertEquals(12, result);
+    }
+
+    @Test
+    void testIsEven() {
+        // Act & Assert
+        assertTrue(calc.isEven(10));
+        assertFalse(calc.isEven(7));
+    }
+}
