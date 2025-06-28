@@ -1,0 +1,41 @@
+CREATE TABLE numbers (
+    num   NUMBER,
+    type  VARCHAR2(10)
+);
+
+INSERT INTO numbers (num) VALUES (1);
+INSERT INTO numbers (num) VALUES (2);
+INSERT INTO numbers (num) VALUES (3);
+INSERT INTO numbers (num) VALUES (4);
+INSERT INTO numbers (num) VALUES (5);
+
+CREATE OR REPLACE PROCEDURE mark_even_odd IS
+CURSOR c IS
+SELECT num FROM numbers;
+BEGIN
+    FOR rec IN c LOOP
+        IF MOD(rec.num, 2) = 0 THEN
+            UPDATE numbers SET type = 'Even' WHERE num = rec.num;
+        ELSE
+            UPDATE numbers SET type = 'Odd' WHERE num = rec.num;
+        END IF;
+    END LOOP;
+END;
+/
+BEGIN
+    mark_even_odd;
+END;
+/
+
+SELECT * FROM numbers;
+
+/*
+Output:
+
+NUM	TYPE
+1	Odd
+2	Even
+3	Odd
+4	Even
+5	Odd
+*/
