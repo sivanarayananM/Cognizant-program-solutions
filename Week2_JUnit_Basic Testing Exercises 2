@@ -1,0 +1,28 @@
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public boolean isPositive(int number) {
+        return number > 0;
+    }
+}
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+
+    @Test
+    void testAdd() {
+        Calculator calc = new Calculator();
+        assertEquals(7, calc.add(3, 4));
+    }
+
+    @Test
+    void testIsPositive() {
+        Calculator calc = new Calculator();
+        assertTrue(calc.isPositive(5));
+        assertFalse(calc.isPositive(-3));
+    }
+}
