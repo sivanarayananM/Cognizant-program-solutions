@@ -1,0 +1,52 @@
+CREATE TABLE employee (
+    id     NUMBER,
+    name   VARCHAR2(50),
+    salary NUMBER,
+    bonus  NUMBER
+);
+
+INSERT INTO employee VALUES (1, 'Sanjay', 9000, NULL);
+INSERT INTO employee VALUES (2, 'Ram', 6000, NULL);
+INSERT INTO employee VALUES (3, 'Kumar', 4500, NULL);
+INSERT INTO employee VALUES (4, 'Gopal', 3000, NULL);
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR emp_cur IS
+        SELECT id, name, salary FROM employee;
+    v_bonus employee.bonus%TYPE;
+BEGIN
+    FOR emp IN emp_cur LOOP
+        IF emp.salary > 8000 THEN
+            v_bonus := 1000;
+        ELSIF emp.salary >= 5000 THEN
+            v_bonus := 500;
+        ELSE
+            v_bonus := 200;
+        END IF;
+
+        UPDATE employee
+        SET bonus = v_bonus
+        WHERE id = emp.id;
+
+        DBMS_OUTPUT.PUT_LINE(emp.name || ' - Salary: ' || emp.salary || ' → Bonus: ' || v_bonus);
+    END LOOP;
+END;
+/
+
+/*
+
+Output
+
+Sanjay - Salary: 9000 → Bonus: 1000
+
+Ram - Salary: 6000 → Bonus: 500
+
+Kumar - Salary: 4500 → Bonus: 200
+
+Gopal - Salary: 3000 → Bonus: 200
+
+
+PL/SQL procedure successfully completed.
+*/
