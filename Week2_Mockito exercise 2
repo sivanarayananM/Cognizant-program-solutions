@@ -1,0 +1,37 @@
+interface PaymentService {
+    void processPayment(double amount);
+}
+
+
+public class ShoppingCart {
+    private PaymentService paymentService;
+
+    public ShoppingCart(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void checkout(double total) {
+        if (total > 0) {
+            paymentService.processPayment(total);
+        }
+    }
+}
+
+
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+
+public class ShoppingCartTest {
+
+    @Test
+    void testProcessPaymentCalled() {
+       
+        PaymentService mockPayment = mock(PaymentService.class);
+
+        ShoppingCart cart = new ShoppingCart(mockPayment);
+
+        cart.checkout(100.0);
+
+        verify(mockPayment).processPayment(100.0);
+    }
+}
