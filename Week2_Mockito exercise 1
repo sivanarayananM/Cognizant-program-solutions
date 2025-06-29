@@ -1,0 +1,41 @@
+interface CalculatorService {
+    int add(int a, int b);
+}
+
+
+public class MathApp {
+    private CalculatorService service;
+
+    public MathApp(CalculatorService service) {
+        this.service = service;
+    }
+
+    public int compute(int a, int b) {
+        return service.add(a, b);
+    }
+}
+
+
+
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MathAppTest {
+
+    @Test
+    public void testCompute() {
+        // Mocking
+        CalculatorService mockService = mock(CalculatorService.class);
+
+        // Stubbing
+        when(mockService.add(5, 3)).thenReturn(8);
+
+        MathApp app = new MathApp(mockService);
+
+        int result = app.compute(5, 3);
+        assertEquals(8, result);
+    }
+}
+
+
