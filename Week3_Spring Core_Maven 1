@@ -1,0 +1,43 @@
+package com.example;
+
+public class HelloService {
+    public void sayHello() {
+        System.out.println("Hello from Spring!");
+    }
+}
+
+package com.example;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class App {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("springconfig.xml");
+        HelloService hello = (HelloService) context.getBean("helloService");
+        hello.sayHello();
+    }
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="helloService" class="com.example.HelloService"/>
+</beans>
+
+
+/*
+
+SpringBasicApp/
+├── src/
+│   ├── com/example/
+│   │   ├── App.java
+│   │   └── HelloService.java
+│   └── springconfig.xml
+
+*/
