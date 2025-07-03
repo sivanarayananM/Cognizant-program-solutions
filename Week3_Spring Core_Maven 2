@@ -1,0 +1,61 @@
+package com.example.demo;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Engine {
+    public Engine() {
+        System.out.println("Engine created");
+    }
+
+    public String start() {
+        return "Engine started";
+    }
+}
+
+
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Vehicle {
+
+    private final Engine engine;
+
+    // Constructor Injection
+    @Autowired
+    public Vehicle(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void drive() {
+        System.out.println(engine.start() + " - Vehicle is moving");
+    }
+}
+
+
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(DemoApplication.class, args);
+        Vehicle vehicle = context.getBean(Vehicle.class);
+        vehicle.drive();
+    }
+}
+
+/*
+Output:
+
+Engine created
+Engine started - Vehicle is moving
+
+*/
