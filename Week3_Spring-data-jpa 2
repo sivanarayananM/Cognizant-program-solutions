@@ -1,0 +1,86 @@
+package com.example.demo.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Country {
+    @Id
+    private String code;  // e.g., IN, US
+    private String name;  // e.g., India, United States
+}
+
+
+package com.example.demo.repository;
+
+import com.example.demo.model.Country;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CountryRepository extends JpaRepository<Country, String> {
+}
+
+
+package com.example.demo.controller;
+
+import com.example.demo.model.Country;
+import com.example.demo.repository.CountryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/countries")
+public class CountryController {
+
+    @Autowired
+    CountryRepository repository;
+
+    @GetMapping("/{code}")
+    public String getCountryByCode(@PathVariable String code) {
+        Optional<Country> country = repository.findById(code.toUpperCase());
+        return country.map(c -> "Country: " + c.getName())
+                      .orElse("Country not found!");
+    }
+
+    @PostMapping("/add")
+    public String addCountry(@RequestBody Country country) {
+        repository.save(country);
+        return "Country added!";
+    }
+}
+
+
+package com.example.demo;
+
+import com.example.demo.model.Country;
+import com.example.demo.repository.CountryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication implements CommandLineRunner {
+
+    @Autowired
+    CountryRepository repo;
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+
+    // Add initial countries
+    @Override
+    public void run(String... args) throws Exception {
+        repo.save(new Country("IN", "India"));
+        repo.save(new Country("US", "United States"));
+        repo.save(new Country("FR", "France"));
+    }
+}
