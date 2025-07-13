@@ -1,0 +1,50 @@
+//Country.java
+package com.example.demo.model;
+
+public class Country {
+    private String code;
+    private String name;
+
+    public Country(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
+    public String getCode() { return code; }
+    public String getName() { return name; }
+}
+
+//CountryController.java
+package com.example.demo.controller;
+
+import com.example.demo.model.Country;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class CountryController {
+
+    @GetMapping("/country/{code}")
+    public Country getCountryByCode(@PathVariable String code) {
+        return switch (code.toUpperCase()) {
+            case "IN" -> new Country("IN", "India");
+            case "US" -> new Country("US", "United States");
+            case "FR" -> new Country("FR", "France");
+            default -> new Country(code.toUpperCase(), "Unknown Country");
+        };
+    }
+}
+
+//DemoApplication.java
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+
