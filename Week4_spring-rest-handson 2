@@ -1,0 +1,56 @@
+//Country.java
+package com.example;
+
+public class Country {
+    private String name;
+    private String capital;
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getCapital() {
+        return capital;
+    }
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{name='" + name + "', capital='" + capital + "'}";
+    }
+}
+
+//MainApp.java
+package com.example;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        Country country = (Country) context.getBean("country");
+        System.out.println("Loaded from Spring XML: " + country);
+    }
+}
+
+
+//applicationContext.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="country" class="com.example.Country">
+        <property name="name" value="India"/>
+        <property name="capital" value="New Delhi"/>
+    </bean>
+
+</beans>
+
