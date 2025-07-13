@@ -1,0 +1,65 @@
+//CountryServiceApplication.java
+package com.example.country;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CountryServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(CountryServiceApplication.class, args);
+    }
+}
+
+//Country.java
+package com.example.country;
+
+public class Country {
+    private String name;
+    private String capital;
+
+    public Country(String name, String capital) {
+        this.name = name;
+        this.capital = capital;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCapital() {
+        return capital;
+    }
+}
+
+//CountryController.java
+package com.example.country;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/countries")
+public class CountryController {
+
+    @GetMapping
+    public List<Country> getAllCountries() {
+        return List.of(
+            new Country("India", "New Delhi"),
+            new Country("USA", "Washington, D.C."),
+            new Country("France", "Paris")
+        );
+    }
+
+    @GetMapping("/{name}")
+    public Country getCountryByName(@PathVariable String name) {
+        return switch (name.toLowerCase()) {
+            case "india" -> new Country("India", "New Delhi");
+            case "usa" -> new Country("USA", "Washington, D.C.");
+            case "france" -> new Country("France", "Paris");
+            default -> new Country("Unknown", "Unknown");
+        };
+    }
+}
+
