@@ -1,0 +1,21 @@
+public class FinancialForecast {
+
+    public double forecastRecursive(double amount, double rate, int years) {
+        if (years == 0) return amount;
+        return forecastRecursive(amount, rate, years - 1) * (1 + rate);
+    }
+
+    public double forecastMemo(double amount, double rate, int years) {
+        double[] memo = new double[years + 1];
+        return forecastMemoHelper(amount, rate, years, memo);
+    }
+
+    private double forecastMemoHelper(double amount, double rate, int year, double[] memo) {
+        if (year == 0) return amount;
+        if (memo[year] != 0) return memo[year];
+        memo[year] = forecastMemoHelper(amount, rate, year - 1, memo) * (1 + rate);
+        return memo[year];
+    }
+}
+
+//

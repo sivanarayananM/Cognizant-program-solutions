@@ -1,0 +1,15 @@
+public class TestForecast {
+    public static void main(String[] args) {
+        FinancialForecast forecast = new FinancialForecast();
+
+        double initial = 10000;
+        double rate = 0.08;
+        int years = 10;
+
+        double futureValue = forecast.forecastRecursive(initial, rate, years);
+        System.out.println("Future Value (Recursive): " + futureValue);
+
+        double futureValueMemo = forecast.forecastMemo(initial, rate, years);
+        System.out.println("Future Value (Memoized): " + futureValueMemo);
+    }
+}
