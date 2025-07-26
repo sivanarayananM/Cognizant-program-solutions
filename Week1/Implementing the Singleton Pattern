@@ -1,0 +1,103 @@
+//1.Eager Initialization Singleton
+ class EagerSingleton {
+    private static final EagerSingleton instance = new EagerSingleton();
+
+    private EagerSingleton() {}
+
+    public static EagerSingleton getInstance() {
+        return instance;
+    }
+}
+//2. Lazy Initialization Singleton
+class LazySingleton {
+    private static LazySingleton instance;
+
+    private LazySingleton() {}
+
+    public static LazySingleton getInstance() {
+        if (instance == null) {
+            instance = new LazySingleton();
+        }
+        return instance;
+    }
+}
+//3. Thread-Safe Singleton
+ class ThreadSafeSingleton {
+    private static ThreadSafeSingleton instance;
+
+    private ThreadSafeSingleton() {}
+
+    public static synchronized ThreadSafeSingleton getInstance() {
+        if (instance == null) {
+            instance = new ThreadSafeSingleton();
+        }
+        return instance;
+    }
+}
+//4. Double-Checked Locking Singleton
+class DoubleCheckedLockingSingleton {
+    private static volatile DoubleCheckedLockingSingleton instance;
+
+    private DoubleCheckedLockingSingleton() {}
+
+    public static DoubleCheckedLockingSingleton getInstance() {
+        if (instance == null) {
+            synchronized (DoubleCheckedLockingSingleton.class) {
+                if (instance == null) {
+                    instance = new DoubleCheckedLockingSingleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+//5. Bill Pugh Singleton 
+ class BillPughSingleton {
+    private BillPughSingleton() {}
+
+    private static class SingletonHelper {
+        private static final BillPughSingleton INSTANCE = new BillPughSingleton();
+    }
+
+    public static BillPughSingleton getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+}
+//6. Enum Singleton
+ enum EnumSingleton {
+    INSTANCE;
+
+    public void doSomething() {
+        System.out.println("Doing something...");
+    }
+}
+//main method
+public class TestLogger {
+    public static void main(String[] args) {
+
+        Logger logger1 = Logger.getInstance();
+        Logger logger2 = Logger.getInstance();
+        logger1.log("Lazy Singleton Logger");
+        System.out.println(logger1 == logger2);
+
+        LoggerThreadSafe logger3 = LoggerThreadSafe.getInstance();
+        LoggerThreadSafe logger4 = LoggerThreadSafe.getInstance();
+        logger3.log("Thread Safe Logger");
+        System.out.println(logger3 == logger4);
+
+        LoggerDoubleChecked logger5 = LoggerDoubleChecked.getInstance();
+        LoggerDoubleChecked logger6 = LoggerDoubleChecked.getInstance();
+        logger5.log("Double Checked Logger");
+        System.out.println(logger5 == logger6);
+
+        LoggerBillPugh logger7 = LoggerBillPugh.getInstance();
+        LoggerBillPugh logger8 = LoggerBillPugh.getInstance();
+        logger7.log("Bill Pugh Logger");
+        System.out.println(logger7 == logger8);
+
+        LoggerEnum logger9 = LoggerEnum.INSTANCE;
+        LoggerEnum logger10 = LoggerEnum.INSTANCE;
+        logger9.log("Enum Logger");
+        System.out.println(logger9 == logger10);
+    }
+}

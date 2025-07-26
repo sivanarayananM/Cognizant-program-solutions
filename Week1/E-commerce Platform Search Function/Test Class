@@ -1,0 +1,34 @@
+import java.util.Arrays;
+
+public class TestSearch {
+    public static void main(String[] args) {
+
+        Product[] products = {
+            new Product(3, "Shoes", "Fashion"),
+            new Product(1, "Laptop", "Electronics"),
+            new Product(4, "Book", "Stationery"),
+            new Product(2, "Phone", "Electronics")
+        };
+
+        SearchService searchService = new SearchService();
+
+        Product resultLinear = searchService.linearSearch(products, 4);
+        if (resultLinear != null) {
+            System.out.println("Linear Search Found: " + resultLinear.getProductName());
+        } else {
+            System.out.println("Product not found with Linear Search");
+        }
+
+        Arrays.sort(products, (a, b) -> Integer.compare(a.getProductId(), b.getProductId()));
+
+        Product resultBinary = searchService.binarySearch(products, 4);
+        if (resultBinary != null) {
+            System.out.println("Binary Search Found: " + resultBinary.getProductName());
+        } else {
+            System.out.println("Product not found with Binary Search");
+        }
+    }
+}
+//Output
+//Linear Search Found: Book
+//Binary Search Found: Book
